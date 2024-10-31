@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { userAgent } from "next/server";
 import axios from "axios";
+import { stat } from "fs";
 
 interface user {
   value: {
@@ -23,17 +24,17 @@ const initialState: user = {
     userId: 10,
     id: 10,
     title: "Awelker",
-    completed: false,
+    completed: true,
   },
 };
 
 export const displayAsyncFetch = createAsyncThunk(
   "user/displayAsyncFetch",
-  async () => {
+  async (sentFromUser: string) => {
     const res = await axios.get("https://jsonplaceholder.typicode.com/todos/1");
     const data = res.data;
     console.log(data);
-    return data;
+    return { data, sentFromUser };
   }
 );
 
@@ -48,8 +49,9 @@ const userSlice = createSlice({
       })
       .addCase(
         displayAsyncFetch.fulfilled,
-        (state, action: PayloadAction<value>) => {
-          state.value = action.payload;
+        (state, action: PayloadAction<any>) => {
+          state.value = action.payload.data;
+          state.value.title = action.payload.sentFromUser;
         }
       );
   },

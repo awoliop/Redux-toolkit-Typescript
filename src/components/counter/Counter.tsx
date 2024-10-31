@@ -16,7 +16,7 @@ const Counter = () => {
   const count = useSelector((state: RootState) => state.counter.value);
   // Add the AddDispatch for when we are dealing with async functions| slices!!
   const dispatch = useDispatch<AppDispatch>();
-
+  const sentFromUser = "Fuad";
   const amountINcrementer = () => {
     dispatch(incrementByAmount(amount));
   };
