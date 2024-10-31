@@ -11,6 +11,13 @@ interface user {
   };
 }
 
+interface value {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
 const initialState: user = {
   value: {
     userId: 10,
@@ -41,7 +48,7 @@ const userSlice = createSlice({
       })
       .addCase(
         displayAsyncFetch.fulfilled,
-        (state, action: PayloadAction<user>) => {
+        (state, action: PayloadAction<value>) => {
           state.value = action.payload;
         }
       );
